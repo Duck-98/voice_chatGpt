@@ -1,6 +1,7 @@
 ### 음성으로 ChatGpt를 사용하는 웹
 
 배포링크 => [Voice-chat-GPT](https://voice-chat-gpt-47lq.vercel.app/)
+[시연 영상](https://www.youtube.com/watch?v=RTvRZ5OCWLM)
 
 #### 기술 스택
 
