@@ -5,7 +5,7 @@ interface Props {
 
 export const useVoice = () => {
   const speak = ({ message, pitch = 1 }: Props) => {
-    // ai 답변
+    // ai 답변을 소리로
     const voice = window.speechSynthesis;
     let voices = voice.getVoices();
     const utterThis = new SpeechSynthesisUtterance(message);
