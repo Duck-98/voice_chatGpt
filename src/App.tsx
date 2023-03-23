@@ -1,10 +1,27 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
+import SpeechRecognition, {
+  useSpeechRecognition,
+} from "react-speech-recognition";
+import ChatGPT from "./components/chatGpt";
 import { VscDebugStart, VscDebugStop } from "react-icons/vsc";
-import { RxCross1 } from "react-icons/rx";
 import { BsGithub } from "react-icons/bs";
 import { Link } from "react-router-dom";
+
 function App() {
+  const [loading, setLoading] = useState<boolean>(false);
+  const [message, setMessage] = useState<string>("");
+  const {
+    transcript,
+    listening,
+    resetTranscript,
+    browserSupportsSpeechRecognition,
+  } = useSpeechRecognition();
+
+  if (!browserSupportsSpeechRecognition) {
+    return <span>Browser doesn't support speech recognition.</span>;
+  }
+
   return (
     <Main>
       <h1>음성으로 ChatGPT를 사용해보세요!</h1>
@@ -13,33 +30,52 @@ function App() {
         <span>1. 시작 버튼을 누르고 질문을 한다.</span>
         <span>2. chatGPT가 로딩하는동안 기다린다.</span>
         <span>3. 종료하고 싶다면, X 버튼을 누른다.</span>
+        <span>
+          Tip. 로딩이 되고 있을 때는 시작 버튼을 누르지 말고 기다려주세요.
+        </span>
       </div>
       <div>
         <div className="btn-container">
+          {listening ? (
+            <div className="circle-container">
+              <Circle />
+            </div>
+          ) : (
+            <StartButton onClick={() => SpeechRecognition.startListening()}>
+              <VscDebugStart />
+            </StartButton>
+          )}
+
           <Button>
-            <VscDebugStart />
+            <VscDebugStop onClick={() => SpeechRecognition.stopListening()} />
           </Button>
-          <Button>
-            <VscDebugStop />
-          </Button>
-          <Button className="reset">
-            <RxCross1 />
-          </Button>
+          <ChatGPT
+            transcript={transcript}
+            listening={listening}
+            resetTranscript={resetTranscript}
+            setLoading={setLoading}
+            message={message}
+            setMessage={setMessage}
+          />
         </div>
-        {/* <div className="loading_spinner_box">
-          <div className="loading_spinner" />
-        </div> */}
+        {loading && (
+          <>
+            <div className="loading_spinner_box">
+              <div className="loading_spinner" />
+            </div>
+          </>
+        )}
       </div>
       <div className="div-con">
         <Label>내 질문</Label>
         <Answer>
-          <span></span>
+          <span>{transcript}</span>
         </Answer>
       </div>
       <div className="div-con">
         <Label>AI 답변</Label>
         <Answer>
-          <span></span>
+          <span>{message}</span>
         </Answer>
       </div>
       <div>
@@ -115,14 +151,29 @@ const Main = styled.main`
     align-items: center;
     margin-bottom: 2rem;
   }
+  .circle-container {
+    display: flex;
+    align-items: center;
+    width: 60px;
+    height: 50px;
+    justify-content: center;
+  }
 `;
 
-const Button = styled.button`
+export const Button = styled.button`
   width: 60px;
   height: 50px;
   border: none;
   color: #61d9fb;
   font-size: 30px;
+`;
+
+const StartButton = styled.button`
+  width: 60px;
+  height: 50px;
+  border: none;
+  font-size: 30px;
+  color: #61d9fb;
 `;
 
 const Label = styled.label`
@@ -136,13 +187,10 @@ const Answer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  /* text-align: center; */
   span {
     border: 1px solid white;
     padding: 3rem;
-    /* white-space: normal; */
     word-break: break-all;
-    /* word-wrap: break-word; */
     width: 50%;
     text-align: center;
     color: white;
@@ -166,6 +214,14 @@ const StyledLink = styled(Link)`
   &:visited {
     color: white;
   }
+`;
+
+const Circle = styled.div`
+  width: 22.5px;
+  height: 22.5px;
+  border-radius: 50%;
+  border: none;
+  background: red;
 `;
 
 export default App;
