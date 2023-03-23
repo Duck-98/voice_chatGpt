@@ -1,5 +1,7 @@
 ### 음성으로 ChatGpt를 사용하는 웹
 
+배포링크 => [Voice-chat-GPT](https://voice-chat-gpt-47lq.vercel.app/)
+
 #### 기술 스택
 
 1. React
