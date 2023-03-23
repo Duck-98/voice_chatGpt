@@ -8,7 +8,6 @@ export const GlobalStyle = createGlobalStyle`
     * {
     	margin: 0;
         padding: 0;
-        box-sizing: border-box;
     }
     h1 {
     display: block;
@@ -36,7 +35,7 @@ export const GlobalStyle = createGlobalStyle`
         display: flex;
         flex-direction: column;
         justify-content: center;
-        height: 100vh;
+        /* height: 100vh; */
         margin: 0;
         padding: 0;
         transition: all 0.25s linear;
