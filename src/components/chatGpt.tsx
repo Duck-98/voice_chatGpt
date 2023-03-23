@@ -25,7 +25,7 @@ function ChatGPT({
 
   const callGpt = async () => {
     setLoading(true);
-    const chat = await chatService.callGpt(transcript);
+    const chat = await chatService.callGpt(transcript); // chatCpt 사용함수
     setMessage(chat);
     setLoading(false);
   };
