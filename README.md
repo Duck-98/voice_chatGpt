@@ -1,6 +1,5 @@
 ### 음성으로 ChatGpt를 사용하는 웹
 
-배포링크 => [Voice-chat-GPT](https://voice-chat-gpt-47lq.vercel.app/)
 <br/>[시연 영상](https://www.youtube.com/watch?v=RTvRZ5OCWLM)
 
 #### 기술 스택
@@ -22,8 +21,3 @@
 3. npm start
 ```
 
-배포된 사이트로 들어간다면
-
-```
-1. 별도의 API key 입력없이 사이트에 나와있는 대로 사용
-```
